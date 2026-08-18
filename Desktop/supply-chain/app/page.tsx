@@ -1,4 +1,11 @@
 import { AlertTriangle, Map, Activity, ShieldAlert } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+// We dynamically import the map to prevent Server-Side Rendering errors
+const MapComponent = dynamic(() => import('./components/map'), {
+  ssr: false,
+  loading: () => <p className="text-slate-500">Loading Digital Twin...</p>
+});
 
 export default function Dashboard() {
   return (
@@ -42,16 +49,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* MAIN AREA: Interactive Map Placeholder */}
-      <div className="flex-1 relative bg-slate-950 flex items-center justify-center">
-        <div className="absolute inset-0 opacity-20" 
-             style={{ backgroundImage: 'radial-gradient(circle at center, #1e293b 2px, transparent 2px)', backgroundSize: '40px 40px' }}>
-        </div>
-        
-        <div className="z-10 text-center">
-          <Map className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-slate-400">Geospatial Digital Twin Loading...</h2>
-          <p className="text-sm text-slate-500 mt-2">Map interface will render here</p>
+      {/* MAIN AREA: Interactive Map */}
+      <div className="flex-1 relative bg-slate-950">
+        <div className="w-full h-full z-0">
+          <MapComponent />
         </div>
       </div>
 
