@@ -1,8 +1,10 @@
+'use client';
+
 import { AlertTriangle, Map, Activity, ShieldAlert } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-// We dynamically import the map to prevent Server-Side Rendering errors
-const MapComponent = dynamic(() => import('./components/map'), {
+// We dynamica lly import the map to prevent Server-Side Rendering errors
+const MapComponent = dynamic(() => import('./components/map'), { 
   ssr: false,
   loading: () => <p className="text-slate-500">Loading Digital Twin...</p>
 });
