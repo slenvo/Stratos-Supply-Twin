@@ -24,50 +24,66 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
 /* Animated Flowing Route for Map */
 .flowing-route {
   animation: flow 1.5s linear infinite;
 }
-
 @keyframes flow {
-  from {
-    stroke-dashoffset: 30;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+  from { stroke-dashoffset: 30; }
+  to { stroke-dashoffset: 0; }
 }
-/* Custom Ship Icon Styles */
-.custom-ship-icon {
+
+/* Leaflet container base */
+.leaflet-container {
+  background: #0f172a !important;
+  font-family: inherit;
+}
+
+.leaflet-control-zoom a {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+}
+.leaflet-control-zoom a:hover {
+  background-color: #334155 !important;
+}
+
+.leaflet-tooltip {
+  background: #f8fafc !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+}
+
+.pulse-ring path {
+  animation: pulseRing 1.8s ease-out infinite;
+  transform-origin: center;
+}
+@keyframes pulseRing {
+  0%   { opacity: 0.6; }
+  70%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.ship-pin {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #f1f5f9; /* slate-100 */
-  border: 2px solid #3b82f6; /* blue-500 */
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  font-size: 1.5rem; /* size of 🚢 */
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  transition: border-color 0.3s ease;
+  background: #0f172a;
+  border: 2px solid var(--pin-color, #3b82f6);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--pin-color, #3b82f6) 60%, transparent);
+  font-size: 1.2rem;
 }
-
-/* Red border when in Hormuz Crisis */
-.custom-ship-icon.hormuz-active {
-  border-color: #ef4444; /* red-500 */
-}
-
-/* Ship animation (Pulse Effect) */
-.custom-ship-icon p {
+.ship-pin span {
   animation: shipPulse 2s infinite;
-  margin: 0;
 }
-
 @keyframes shipPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.12); opacity: 0.85; }
 }
