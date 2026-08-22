@@ -218,7 +218,7 @@ export default function Dashboard() {
                 href="mailto:stratos.helpdesk@gmail.com?subject=Emergency%20Override%20Request%20-%20Stratos%20Dashboard" 
                 className="w-full bg-slate-700 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded transition-colors flex justify-center items-center gap-2"
               >
-                <Mail className="w-3 h-3"/> SEND SECURE COMM
+                <Mail className="w-3 h-3"/> CONTACT HELPDESK
               </a>
             </div>
           </div>
