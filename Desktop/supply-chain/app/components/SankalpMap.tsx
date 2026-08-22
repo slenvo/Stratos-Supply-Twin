@@ -1,31 +1,61 @@
-'use client';
-
-import { MapContainer, TileLayer, CircleMarker, Polyline, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, Marker } from 'react-leaflet';
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-export default function Map({ scenario = 'none' }: { scenario?: string }) {  
-  const locations = {
-    jamnagar: [22.3399, 69.9501] as [number, number],
-    hormuz: [26.5667, 56.2500] as [number, number],
-    suez: [30.5852, 32.2653] as [number, number],
-    cape: [-34.3568, 18.4710] as [number, number]
+// Fix for default marker icons issue in React-Leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: '/marker-icon-2x.png',
+  iconUrl: '/marker-icon.png',
+  shadowUrl: '/marker-shadow.png',
+});
+
+// Create custom 🚢 DivIcon
+const shipIconHormuz = L.divIcon({
+  html: '<p>🚢</p>',
+  className: 'custom-ship-icon',
+  iconSize: [30, 30],
+  iconAnchor: [15, 15] // centering
+});
+
+// Red Version for Hormuz Standoff
+const shipIconRed = L.divIcon({
+  html: '<p>🚢</p>',
+  className: 'custom-ship-icon hormuz-active',
+  iconSize: [30, 30],
+  iconAnchor: [15, 15]
+});
+
+// Yellow Version for Red Sea Disruption
+const shipIconRedSea = L.divIcon({
+  html: '<p>🚢</p>',
+  className: 'custom-ship-icon redsea-active', // Optional, will add pulse automatically
+  iconSize: [30, 30],
+  iconAnchor: [15, 15]
+});
+
+export default function SankalpMap({ scenario = 'none' }: { scenario?: string }) {
+  // Defined locations
+  const locations: Record<string, [number, number]> = {
+    jamnagar: [22.4, 70.0],
+    rasTanura: [26.8, 50.1],
+    suez: [30.0, 32.5],
+    cape: [34.3, 18.4], // Cape of Good Hope, South Africa
   };
 
-  // Main Default Shipping Route (Suez -> Hormuz -> India)
-  const primaryRoute = [locations.suez, locations.hormuz, locations.jamnagar];
+  // Paths
+  const primaryRoute = [locations.rasTanura, locations.jamnagar];
+  const redSeaRoute = [locations.suez, locations.jamnagar];
+  const capeRoute = [locations.suez, locations.cape, locations.jamnagar];
 
   return (
-    <MapContainer 
-      center={[20.0, 60.0]} 
-      zoom={4} 
-      style={{ height: '100%', width: '100%', zIndex: 0 }}
-    >
+    <MapContainer center={[20, 50]} zoom={3.5} className="w-full h-full rounded-xl z-10" style={{ background: '#1e293b' }}>
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; CARTO'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* Primary Route - Turns Red if Hormuz is blocked */}
+      {/* Primary Route */}
       <Polyline 
         positions={primaryRoute} 
         color={scenario === 'hormuz' ? "#ef4444" : "#3b82f6"} 
@@ -33,26 +63,43 @@ export default function Map({ scenario = 'none' }: { scenario?: string }) {
         dashArray="5, 10"
         className="flowing-route"
       />
+      {/* Ship on Primary Route: Middle of Persian Gulf */}
+      <Marker 
+        position={[24.6, 60.0]} 
+        icon={scenario === 'hormuz' ? shipIconRed : shipIconHormuz}
+      />
+
+      {/* Red Sea Route - Always Blue and Flowing */}
+      {scenario !== 'redsea' && (
+        <>
+          <Polyline 
+            positions={redSeaRoute} 
+            color="#3b82f6" 
+            weight={3} 
+            dashArray="5, 10" 
+            className="flowing-route"
+          />
+          {/* Ship on Red Sea Path: Middle of Arabian Sea */}
+          <Marker position={[16.0, 55.0]} icon={shipIconHormuz} />
+        </>
+      )}
 
       {/* Alternate Route via Cape - Shows up if Red Sea is disrupted */}
       {scenario === 'redsea' && (
-        <Polyline 
-          positions={[locations.suez, locations.cape, locations.jamnagar]} 
-          color="#f59e0b" 
-          weight={3} 
-          dashArray="5, 10" 
-          className="flowing-route"
-        />
+        <>
+          <Polyline 
+            positions={capeRoute} 
+            color="#f59e0b" // yellow-500
+            weight={3} 
+            dashArray="5, 10" 
+            className="flowing-route"
+          />
+          {/* Ship on Cape Path: South Atlantic */}
+          <Marker position={[-20.0, 10.0]} icon={shipIconRedSea} />
+          {/* Alternate marker in Mediterranean (Still connected via Suez) */}
+          <Marker position={[35.0, 20.0]} icon={shipIconRedSea} />
+        </>
       )}
-
-      {/* Plot the Locations */}
-      {Object.entries(locations).map(([name, coords]) => (
-        <CircleMarker key={name} center={coords} radius={6} color="#10b981" fillColor="#10b981" fillOpacity={1}>
-          <Tooltip direction="top" opacity={1}>
-            <span className="capitalize font-bold text-slate-900">{name}</span>
-          </Tooltip>
-        </CircleMarker>
-      ))}
     </MapContainer>
   );
 }

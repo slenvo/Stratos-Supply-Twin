@@ -37,3 +37,37 @@ body {
     stroke-dashoffset: 0;
   }
 }
+/* Custom Ship Icon Styles */
+.custom-ship-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f5f9; /* slate-100 */
+  border: 2px solid #3b82f6; /* blue-500 */
+  border-radius: 50%;
+  font-size: 1.5rem; /* size of 🚢 */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  transition: border-color 0.3s ease;
+}
+
+/* Red border when in Hormuz Crisis */
+.custom-ship-icon.hormuz-active {
+  border-color: #ef4444; /* red-500 */
+}
+
+/* Ship animation (Pulse Effect) */
+.custom-ship-icon p {
+  animation: shipPulse 2s infinite;
+  margin: 0;
+}
+
+@keyframes shipPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
