@@ -19,7 +19,7 @@ India imports approximately 88% of its crude oil, with major volumes transiting 
 
 ## 👥 Team
 *   **Shreesh Shukla** - System Architecture & UI/UX
-*   **Amrita** - Data Modeling & Geospatial Routing
+*   **Amrita Singh** - Data Modeling & Geospatial Routing
 
 ---
 *Built with 💻 and ☕ for OOSC 2026.*
