@@ -28,9 +28,9 @@ export default function Dashboard() {
       {/* SIDEBAR: Crisis Control Panel */}
       <div className="w-80 bg-slate-900 border-r border-slate-800 p-6 flex flex-col z-20 shadow-2xl">
         <div className="flex items-center gap-3 mb-8">
-          <Activity className="text-blue-500 w-8 h-8" />
-          <h1 className="text-2xl font-bold tracking-wider">SANKALP</h1>
-        </div>
+  <Activity className="text-blue-500 w-8 h-8" />
+  <h1 className="text-2xl font-bold tracking-wider">STRATOS</h1>
+</div>
 
         <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">Active Scenarios</h2>
         
