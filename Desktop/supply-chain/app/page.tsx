@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [customRisk, setCustomRisk] = useState<any>(null);
 
   // --- RESIZABLE SIDEBAR STATES ---
-  const [leftWidth, setLeftWidth] = useState(320); // Default 320px
+  const [leftWidth, setLeftWidth] = useState(320); 
   const [rightWidth, setRightWidth] = useState(320);
   const [isDraggingLeft, setIsDraggingLeft] = useState(false);
   const [isDraggingRight, setIsDraggingRight] = useState(false);
@@ -27,11 +27,9 @@ export default function Dashboard() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDraggingLeft) {
-        // Limit left sidebar width between 250px and 600px
         const newWidth = Math.max(250, Math.min(e.clientX, 600));
         setLeftWidth(newWidth);
       } else if (isDraggingRight) {
-        // Limit right sidebar width between 250px and 600px
         const newWidth = Math.max(250, Math.min(window.innerWidth - e.clientX, 600));
         setRightWidth(newWidth);
       }
@@ -45,7 +43,6 @@ export default function Dashboard() {
     if (isDraggingLeft || isDraggingRight) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      // Disable text selection globally while dragging
       document.body.style.userSelect = 'none';
     }
 
@@ -107,8 +104,25 @@ export default function Dashboard() {
       >
         <div className="p-5 flex-1 overflow-y-auto flex flex-col">
           <div className="flex items-center gap-3 mb-6 border-b border-slate-800 pb-4 shrink-0">
-            <Activity className="text-blue-500 w-8 h-8" />
-            <h1 className="text-xl font-bold tracking-wider">STRATOS</h1> {/* AI REMOVED HERE */}
+            <div className="w-8 h-8 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center justify-center">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="#3b82f6" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 3.25-1.25 5.5-1.25s3 1.25 5.5 1.25 2-1 2.5-1v-4.5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2V21z" />
+                <path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6" />
+                <path d="M12 5v-3" />
+                <path d="M9 2h6" />
+              </svg>
+            </div>
+            <h1 className="text-xl font-bold tracking-wider">STRATOS</h1>
           </div>
 
           <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2"><MapPin className="w-3 h-3"/> Custom Route Analysis</h2>
