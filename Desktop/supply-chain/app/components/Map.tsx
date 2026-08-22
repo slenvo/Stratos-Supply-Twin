@@ -30,7 +30,8 @@ export default function Map({ scenario = 'none' }: { scenario?: string }) {
         positions={primaryRoute} 
         color={scenario === 'hormuz' ? "#ef4444" : "#3b82f6"} 
         weight={3} 
-        dashArray="5, 10" 
+        dashArray="5, 10"
+        className="flowing-route"
       />
 
       {/* Alternate Route via Cape - Shows up if Red Sea is disrupted */}
@@ -40,6 +41,7 @@ export default function Map({ scenario = 'none' }: { scenario?: string }) {
           color="#f59e0b" 
           weight={3} 
           dashArray="5, 10" 
+          className="flowing-route"
         />
       )}
 
