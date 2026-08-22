@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, Map, Activity, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, Activity, ShieldAlert } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
