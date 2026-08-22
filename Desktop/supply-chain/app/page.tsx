@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 // We dynamica lly import the map to prevent Server-Side Rendering errors
-const MapComponent = dynamic(() => import('./components/map'), {
+const MapComponent = dynamic(() => import('./components/SankalpMap'), {
       ssr: false,
   loading: () => <p className="text-slate-500">Loading Digital Twin...</p>
 });
